@@ -19,5 +19,6 @@ setup(
         'Pillow',
         'scikit-learn',
         'pandas',
+        'scipy',
         ],
     )
