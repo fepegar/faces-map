@@ -1,5 +1,5 @@
-from pathlib import Path
 from typing import List
+from pathlib import Path
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from faces_map import download, encoding
@@ -21,7 +21,7 @@ def main():
         formatter_class=RawDescriptionHelpFormatter)
 
     parser.add_argument(
-        'input_log', type=str,
+        'input_log', type=Path,
         help='path to a file containing the output of the browser console')
 
     parser.add_argument(

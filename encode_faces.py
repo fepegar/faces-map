@@ -26,19 +26,19 @@ def main():
         formatter_class=RawDescriptionHelpFormatter)
 
     parser.add_argument(
-        'input_dir', type=str,
+        'input_dir', type=Path,
         help='directory that will be searched for JPEG files recursively')
     parser.add_argument(
-        'output_csv', type=str,
+        'output_csv', type=Path,
         help='path to the CSV file where the encodings will be saved')
     arguments = parser.parse_args()
 
-    input_dir: Path = Path(arguments.input_dir).expanduser()
-    if not input_dir.is_dir():
-        print_color(f'Error: directory "{input_dir}" does not exist', RED)
+    photos_dir: Path = arguments.input_dir
+    if not photos_dir.is_dir():
+        print_color(f'Error: directory "{photos_dir}" does not exist', RED)
         sys.exit(1)
 
-    encoding.encode_faces(input_dir, encodings_path=arguments.output_csv)
+    encoding.encode_faces(photos_dir, encodings_path=arguments.output_csv)
 
 if __name__ == '__main__':
     main()

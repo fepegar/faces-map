@@ -15,6 +15,7 @@ Then click on the console output and save the log with Save as...
 """
 
 from typing import List
+from pathlib import Path
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from faces_map import download
@@ -35,10 +36,10 @@ def main():
         formatter_class=RawDescriptionHelpFormatter)
 
     parser.add_argument(
-        'input_log', type=str,
+        'input_log', type=Path,
         help='path to a file containing the output of the browser console')
     parser.add_argument(
-        'output_dir', type=str,
+        'output_dir', type=Path,
         help='directory where the photos will be saved')
     arguments = parser.parse_args()
 
