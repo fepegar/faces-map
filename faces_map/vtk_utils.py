@@ -1,6 +1,7 @@
 from tempfile import NamedTemporaryFile
+
 import vtk
-from skimage import io
+from PIL import Image
 
 
 def show_scene(actors, show_unit_cube=False):
@@ -68,7 +69,7 @@ def array_to_poly_data(array, spacing=None, origin=None):
     """
     with NamedTemporaryFile(suffix='.jpg') as f:
         filepath = f.name
-        io.imsave(filepath, array)
+        Image.fromarray(array).save(filepath)
         jpeg_reader = vtk.vtkJPEGReader()
         jpeg_reader.SetFileName(filepath)
         jpeg_reader.Update()
