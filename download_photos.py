@@ -14,11 +14,10 @@ for (img of document.getElementsByTagName('img')) { if (!img.alt) continue; cons
 Then click on the console output and save the log with Save as...
 """
 
-from pathlib import Path
-from typing import List, Dict
+from typing import List
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-from faces_map.download import read_log, download_urls
+from faces_map import download
 
 
 def main():
@@ -43,10 +42,7 @@ def main():
         help='directory where the photos will be saved')
     arguments = parser.parse_args()
 
-    output_dir: Path = Path(arguments.output_dir).expanduser()
-    output_dir.mkdir(exist_ok=True)
-    urls: Dict[str, str] = read_log(Path(arguments.input_log))
-    download_urls(urls, output_dir)
+    download.download_urls(arguments.input_log, arguments.output_dir)
 
 
 if __name__ == '__main__':

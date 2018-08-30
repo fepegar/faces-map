@@ -19,7 +19,8 @@ detection_methods: set = {HOG, CNN}
 Box = Tuple[int, int, int, int]
 
 
-def encode_faces(dataset_dir: Path, detection_method: str = HOG) -> FacesData:
+def encode_faces(dataset_dir: Path, detection_method: str = HOG,
+                 encodings_path: Path = None) -> FacesData:
     faces: List[Face] = []
     image_paths: List[Path] = sorted(list(dataset_dir.glob('**/*.jpg')))
     num_paths: int = len(image_paths)
@@ -54,4 +55,6 @@ def encode_faces(dataset_dir: Path, detection_method: str = HOG) -> FacesData:
         BLUE)
 
     faces_data: FacesData = FacesData(faces)
+    if encodings_path is not None:
+        faces_data.save(encodings_path)
     return faces_data

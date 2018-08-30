@@ -1,12 +1,15 @@
 import re
 import urllib.request
 from pathlib import Path
+from typing import Union
 from typing import List, Dict, Optional
 
 from .console import print_color, RED, GREEN
 
+PathLike = Union[str, Path]
 
-def read_log(log_path: Path) -> Dict[str, str]:
+
+def read_log(log_path: PathLike) -> Dict[str, str]:
     """
     Read a Chrome log file with Facebook URLs.
 
@@ -14,6 +17,7 @@ def read_log(log_path: Path) -> Dict[str, str]:
     Second line is expected to be blank
     Last is expected to be "undefined"
     """
+    log_path = Path(log_path)
     lines: List[str] = log_path.read_text().splitlines()
     urls: Dict[str, str] = {}
     for line in lines[2:-1]:  # skip JS command, blank line and "undefined"
@@ -35,7 +39,10 @@ def get_id_from_url(url: str) -> Optional[str]:
     return matches[0] if len(matches) == 1 else None
 
 
-def download_urls(urls: Dict[str, str], output_dir: Path):
+def download_urls(log_path: PathLike, output_dir: PathLike):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
+    urls: Dict[str, str] = read_log(log_path)
     num_urls: int = len(urls)
     for i, (image_id, url) in enumerate(urls.items()):
         image_path: Path = output_dir / f'{image_id}.jpg'

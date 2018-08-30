@@ -1,22 +1,17 @@
-"""
-Script to generate the embedding image
-"""
-
-import sys
-from typing import List
 from pathlib import Path
+from typing import List
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-from faces_map.console import print_color, RED
+from faces_map import download, encoding
 from faces_map.face import FacesData, FACE_SIZE, FACES_SIDE, PERPLEXITY
 
 
 def main():
-    description: str = 'Embed encoded faces in a 2D map and save it'
+    description: str = 'Download all photos listed in a Facebook console log'
 
-    examples: List[str] = '\n'.join([
-        'Examples:',
-        'embed_faces ~/Desktop/encodings.csv ~/Desktop/embedding.jpg',
+    examples: List[str] = '\n'.join(
+        ['Examples:',
+         'download_photos facebook.log ~/Desktop/facebook_photos/',
         ])
 
     # RawDescriptionHelpFormatter is used to print examples in multiple lines
@@ -26,11 +21,9 @@ def main():
         formatter_class=RawDescriptionHelpFormatter)
 
     parser.add_argument(
-        'input_csv', type=str,
-        help='path to the CSV file where the encodings have been saved')
-    parser.add_argument(
-        'output_jpg', type=str,
-        help='path to the image file where the embedded faces will be saved')
+        'input_log', type=str,
+        help='path to a file containing the output of the browser console')
+
     parser.add_argument(
         '--faces-side', '-d', type=int, default=FACES_SIDE,
         help=(
@@ -60,16 +53,28 @@ def main():
         '--no-overwrite', action='store_true',
         help='do not overwrite encodings file with embedding coordinates'
     )
+
     arguments = parser.parse_args()
 
-    encodings_path: Path = Path(arguments.input_csv).expanduser()
-    if not encodings_path.is_file():
-        print_color(f'Error: file "{encodings_path}" does not exist', RED)
-        sys.exit(1)
+    log_path: Path = Path(arguments.input_log)
+    stem = log_path.stem
+    parent = log_path.parent
 
+    # Download images
+    photos_dir: Path = parent / f'{stem}'
+    if not photos_dir.is_dir():
+        download.download_urls(arguments.input_log, photos_dir)
+
+    # Encode faces
+    encodings_path: Path = parent / f'{stem}.csv'
+    if not encodings_path.is_file():
+        encoding.encode_faces(photos_dir, encodings_path=encodings_path)
+
+    # Embed faces
+    embedding_path: Path = parent / f'{stem}.jpg'
     faces_data = FacesData(encodings_path)
     faces_data.make_tsne_montage(
-        arguments.output_jpg,
+        embedding_path,
         faces_side=arguments.faces_side,
         face_size=arguments.face_size,
         nearest=arguments.nearest
@@ -81,6 +86,7 @@ def main():
         print(f'Overwriting {encodings_path}...')
         faces_data.save(encodings_path)
         print('t-SNE coordinates added to', encodings_path)
+
 
 if __name__ == '__main__':
     main()

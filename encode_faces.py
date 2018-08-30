@@ -8,7 +8,6 @@ from pathlib import Path
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from faces_map import encoding
-from faces_map.path import ensure_dir
 from faces_map.console import print_color, RED
 
 
@@ -16,10 +15,9 @@ def main():
     description: str = 'Encode faces found in all photos in a directory'
 
     examples: List[str] = '\n'.join([
-            'Examples:',
-            'encode_faces ~/Desktop/facebook_photos/ ~/Desktop/encodings.csv',
-        ]
-    )
+        'Examples:',
+        'encode_faces ~/Desktop/facebook_photos/ ~/Desktop/encodings.csv',
+    ])
 
     # RawDescriptionHelpFormatter is used to print examples in multiple lines
     parser: ArgumentParser = ArgumentParser(
@@ -40,11 +38,7 @@ def main():
         print_color(f'Error: directory "{input_dir}" does not exist', RED)
         sys.exit(1)
 
-    encodings_path: Path = Path(arguments.output_csv).expanduser()
-    ensure_dir(encodings_path)
-
-    faces_data = encoding.encode_faces(input_dir)
-    faces_data.save(encodings_path)
+    encoding.encode_faces(input_dir, encodings_path=arguments.output_csv)
 
 if __name__ == '__main__':
     main()

@@ -11,6 +11,7 @@ setup(
             'download_photos = download_photos:main',
             'encode_faces = encode_faces:main',
             'embed_faces = embed_faces:main',
+            'log2map = log2map:main',
         ]
     },
     install_requires=[

@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+from .path import ensure_dir
 from .console import print_color, RED
 
 NOT_CLASSIFIED = -1
@@ -167,6 +168,7 @@ class FacesData:
 
 
     def save(self, csv_path) -> None:
+        ensure_dir(csv_path)
         self.df.to_csv(csv_path)
 
 
@@ -375,6 +377,7 @@ class FacesData:
                           faces_side=FACES_SIDE,
                           face_size=FACE_SIZE,
                           nearest=False):
+        ensure_dir(output_path)
         self.ensure_coordinates(dimensions=2)
         if nearest:
             self.make_tsne_nearest_montage(
