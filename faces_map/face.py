@@ -1,5 +1,3 @@
-# https://stackoverflow.com/a/33533514/3956024
-from __future__ import annotations
 import sys
 import string
 from pathlib import Path
@@ -315,7 +313,7 @@ class FacesData:
             face.plot(axis=axis)
 
 
-    def copy(self) -> FacesData:
+    def copy(self):
         return FacesData(self.df.copy())
 
 
