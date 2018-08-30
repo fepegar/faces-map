@@ -18,23 +18,23 @@ Install `pip` package:
 
 ### Optional (for experimental features)
 ```shell
-(faces)$ conda install matplotlib
-(faces)$ conda install vtk
+(faces) $ conda install matplotlib
+(faces) $ conda install vtk
 ```
 
 ## Usage
 ```shell
-(faces)$ DIR_WITH_PHOTOS="awesome_photos/"
-(faces)$ OUTPUT_CSV ="encodings.csv"
-(faces)$ OUTPUT_MAP ="embedding.jpg"
-(faces)$ encode_faces $DIR_WITH_PHOTOS $OUTPUT_CSV
-(faces)$ embed_faces $OUTPUT_CSV $OUTPUT_MAP
+(faces) $ DIR_WITH_PHOTOS="awesome_photos/"
+(faces) $ OUTPUT_CSV ="encodings.csv"
+(faces) $ OUTPUT_MAP ="embedding.jpg"
+(faces) $ encode_faces $DIR_WITH_PHOTOS $OUTPUT_CSV
+(faces) $ embed_faces $OUTPUT_CSV $OUTPUT_MAP
 ```
 
 If you want to use your Facebook tagged photos, you can download them as explained in the [`download_photos`](download_photos.py) script. For example:
 
 ```shell
-(faces)$ IN_LOG="facebook.log"
-(faces)$ OUT_DIR="fb_photos/"
-(faces)$ download_photos $IN_LOG $OUT_DIR
+(faces) $ IN_LOG="facebook.log"
+(faces) $ OUT_DIR="fb_photos/"
+(faces) $ download_photos $IN_LOG $OUT_DIR
 ```
