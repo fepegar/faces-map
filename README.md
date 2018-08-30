@@ -13,7 +13,7 @@ $ source activate $ENV_NAME
 Install `pip` package:
 
 ```shell
-(faces)$ pip install faces_map
+(faces) $ pip install faces_map
 ```
 
 ### Optional (for experimental features)
