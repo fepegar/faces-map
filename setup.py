@@ -23,7 +23,6 @@ setup(
     },
     classifiers=(
         'Programming Language :: Python :: 3.6',
-        'LICENSE :: OSI APPROVED :: GNU GENERAL PUBLIC LICENSE (GPL)',
         'Operating System :: OS Independent',
     ),
     install_requires=[
