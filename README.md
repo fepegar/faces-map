@@ -76,7 +76,8 @@ $ source activate $ENV_NAME
 Install `pip` package:
 
 ```shell
-(faces) $ pip install faces_map
+(faces) $ git clone https://github.com/fepegar/faces-map.git
+(faces) $ pip install ./faces_map
 ```
 
 ### Optional (for experimental features)
@@ -88,8 +89,8 @@ Install `pip` package:
 ## Usage
 ```shell
 (faces) $ DIR_WITH_PHOTOS="awesome_photos/"
-(faces) $ OUTPUT_CSV ="encodings.csv"
-(faces) $ OUTPUT_MAP ="embedding.jpg"
+(faces) $ OUTPUT_CSV="encodings.csv"
+(faces) $ OUTPUT_MAP="embedding.jpg"
 (faces) $ encode_faces $DIR_WITH_PHOTOS $OUTPUT_CSV
 (faces) $ embed_faces $OUTPUT_CSV $OUTPUT_MAP
 ```
